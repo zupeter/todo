@@ -1,6 +1,6 @@
 # Project todo
 
-One Paragraph of project description goes here
+A repo for journalling of my own backend stack build-up
 
 ## Getting Started
 
