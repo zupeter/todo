@@ -9,7 +9,6 @@ import (
 	"syscall"
 	"time"
 
-	"todo/internal/auth"
 	"todo/internal/server"
 )
 
@@ -39,8 +38,6 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 }
 
 func main() {
-
-	auth.NewAuth()
 
 	server := server.NewServer()
 
