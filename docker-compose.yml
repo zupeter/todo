@@ -1,15 +1,35 @@
 services:
-  psql_bp:
-    image: postgres:latest
+  postgres:
+    image: postgres:17
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - path: ./default.env
+        required: true # default
+      - path: ./.env
+        required: false # override with .env if it exists
     ports:
       - "${DB_PORT}:5432"
     volumes:
-      - psql_volume_bp:/var/lib/postgresql/data
+      - postgres17:/var/lib/postgresql/data
+    networks:
+      - todo
+
+  app:
+    image: golang:1.24
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - todo
 
 volumes:
-  psql_volume:
+  postgres17:
+    name: postgres17
+    driver: local
+
+networks:
+  todo:
+    name: todo
+    driver: bridge
